@@ -39,19 +39,25 @@ available at URL: https://mydataapidev.aade.gr/</p>
 
 ## Installation
 
+## Clone from repository
+
 ```
 git clone https://github.com/PStoreGR/aade-mydata.git
 ```
 
+## Install with composer
+
+```
+composer require pstoregr/myaade
+```
+
 ## Register The App Settings Array
+
+<p>In the environment pass prod for production and dev for development.</p>
 
 ```
 $settings = array(
     'environment' => 'dev',
-    'urls' => array(
-        'dev' => 'https://mydataapidev.aade.gr/',
-        'prod' => ''
-    ),
     'credentials' => array(
         'user_id' => '',
         'subscription_key' => ''
