@@ -42,7 +42,7 @@ available at URL: https://mydataapidev.aade.gr/</p>
 ## Clone from repository
 
 ```
-git clone https://github.com/PStoreGR/aade-mydata.git
+git clone https://github.com/PStoreGR/myaade.git
 ```
 
 ## Install with composer
