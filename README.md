@@ -2,7 +2,7 @@
 
 ## About the repo
 
-<p>This repo is made for our personal uses based on <a href="https://github.com/firebed/aade-mydata">Firebed Aade Mydata</a>.</p>
+<p>This repo created for our personal uses based on <a href="https://github.com/firebed/aade-mydata">Firebed Aade Mydata</a>.</p>
 
 ### Licence
 
