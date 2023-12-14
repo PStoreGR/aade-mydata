@@ -1,0 +1,32 @@
+{
+  "name": "pstoregr/myaade",
+  "type": "package",
+  "description": "Handles requests for AADE myDATA.",
+  "keywords": [
+    "myDATA",
+    "AADE",
+    "ΑΑΔΕ"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "PStoreGR (Efthymios Paloukas)",
+      "email": "info@pstoregr.dev"
+    }
+  ],
+  "require": {
+    "firebed/aade-mydata": "^3.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pstoregr\\Myaade\\": "app/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
