@@ -9,22 +9,15 @@ use Pstoregr\Myaade\Services\RetrieveInvoiceService;
  * 
  * Handles retrieve invoice
  */
-class RetrieveInvoiceController
+class RetrieveInvoiceController extends RetrieveInvoiceService
 {
     /**
-     * @var RetrieveInvoiceService $retrieveInvoiceService
-     */
-    private RetrieveInvoiceService $retrieveInvoiceService;
-
-    /**
      * @param string $mark
-     * 
-     * @var RetrieveInvoiceService $retrieveInvoiceService
      * 
      * @return string
      */
     public function retrieveInvoice($mark): string
     {
-        return $this->retrieveInvoiceService->withMark($mark);
+        return $this->retrieve()->invoice($mark);
     }
 }

@@ -17,6 +17,11 @@ class CancelInvoiceRequest
      */
     private ResponseDoc $response;
 
+    /**
+     * @var CancelInvoice $cancelInvoice
+     */
+    private CancelInvoice $cancelInvoice;
+
     /** 
      * @param string $mark
      * 
@@ -27,8 +32,14 @@ class CancelInvoiceRequest
      */
     public function send($mark): self
     {
-        $cancelInvoice = new CancelInvoice();
-        $this->response = $cancelInvoice->handle($mark);
+        /**
+         * TODO: fix handle params
+         * 
+         * public function handle(
+         *       string $mark, ?string $entityVatNumber = null
+         * ): ResponseDoc { }         * 
+         */
+        $this->response = $this->cancelInvoice->handle($mark);
         return $this;
     }
 
@@ -42,6 +53,8 @@ class CancelInvoiceRequest
      */
     public function response($print = false): ResponseDoc
     {
+        // TODO: fix response
+
         $response = $this->response;
         if ($print) {
             $errors = [];

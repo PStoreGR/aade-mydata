@@ -12,12 +12,20 @@ class RetrieveInvoiceService
      */
     private string $mark;
 
+    /** 
+     * @return self
+     */
+    public function retrieve(): self
+    {
+        return $this;
+    }
+
     /**
      * @param string $mark
      * 
      * @return string
      */
-    public function withMark($mark): string
+    public function invoice($mark): string
     {
         $this->mark = $mark;
         return $this->mark;

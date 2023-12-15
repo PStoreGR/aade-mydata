@@ -19,7 +19,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Pstoregr\\Myaade\\": "app/"
+      "Pstoregr\\Myaade\\": "app/",
+      "Pstoregr\\Myaade\\Tests\\": "tests/"
     }
   },
   "config": {

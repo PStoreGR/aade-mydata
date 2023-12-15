@@ -10,24 +10,16 @@ use Pstoregr\Myaade\Services\SendInvoiceService;
  * 
  * Handles create invoice
  */
-class SendInvoiceController
+class SendInvoiceController extends SendInvoiceService
 {
     /**
-     * @var private SendInvoiceService $sendInvoiceService
-     */
-    private SendInvoiceService $sendInvoiceService;
-
-    /**
      * @param array $args
-     * 
-     * @var SendInvoiceService $sendInvoiceService
      * 
      * @return self
      */
     public function createInvoice(array $args): self
     {
-        $this->sendInvoiceService = (new SendInvoiceService);
-        $this->sendInvoiceService->create()->invoice($args);
+        $this->create()->invoice($args);
         return $this;
     }
 
@@ -38,6 +30,6 @@ class SendInvoiceController
      */
     public function getInvoicesDoc(): InvoicesDoc
     {
-        return $this->sendInvoiceService->preparedInvoicesDoc();
+        return $this->preparedInvoicesDoc();
     }
 }

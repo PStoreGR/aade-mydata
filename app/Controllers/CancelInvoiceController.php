@@ -9,22 +9,15 @@ use Pstoregr\Myaade\Services\CancelInvoiceService;
  * 
  * Handles cancel invoice
  */
-class CancelInvoiceController
+class CancelInvoiceController extends CancelInvoiceService
 {
     /**
-     * @var CancelInvoiceService $cancelInvoiceService
-     */
-    private CancelInvoiceService $cancelInvoiceService;
-
-    /**
      * @param string $mark
-     * 
-     * @var CancelInvoiceService $cancelInvoiceService
      * 
      * @return string
      */
     public function cancelInvoice($mark): string
     {
-        return $this->cancelInvoiceService->withMark($mark);
+        return $this->cancel()->invoice($mark);
     }
 }

@@ -48,12 +48,4 @@ class AppConfig
     {
         return empty(self::$settings['credentials']['user_id']) || empty(self::$settings['credentials']['subscription_key']);
     }
-
-    /**
-     * @return bool
-     */
-    private function isEmptyDevUrl(): bool
-    {
-        return empty(self::$settings['urls']['dev']);
-    }
 }

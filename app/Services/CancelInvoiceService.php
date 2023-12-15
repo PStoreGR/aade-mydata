@@ -10,18 +10,20 @@ namespace Pstoregr\Myaade\Services;
 class CancelInvoiceService
 {
     /**
-     * @var string $mark
+     * @return self
      */
-    private string $mark;
+    public function cancel(): self
+    {
+        return $this;
+    }
 
     /**
      * @param string $mark
      * 
      * @return string
      */
-    public function withMark($mark): string
+    public function invoice($mark): string
     {
-        $this->mark = $mark;
-        return $this->mark;
+        return $mark;
     }
 }

@@ -16,6 +16,11 @@ class RetrieveInvoiceRequest
     private RequestedDoc $response;
 
     /**
+     * @var RequestDocs $requestDocs
+     */
+    private RequestDocs $requestDocs;
+
+    /**
      * Sends the cancelation request
      * 
      * @param string $mark
@@ -27,8 +32,22 @@ class RetrieveInvoiceRequest
      */
     public function send($mark): self
     {
-        $requestDocs = new RequestDocs();
-        $this->response = $requestDocs->handle($mark);
+        /**
+         * TODO: fix handle params
+         * 
+         * public function handle(
+         * string $mark = '',
+         * ?string $dateFrom = null,
+         * ?string $dateTo = null,
+         * ?string $receiverVatNumber = null,
+         * ?string $entityVatNumber = null,
+         * ?string $invType = null,
+         * ?string $maxMark = null,
+         * ?string $nextPartitionKey = null,
+         * ?string $nextRowKey = null
+         * ): RequestedDoc { }
+         */
+        $this->response = $this->requestDocs->handle($mark);
         return $this;
     }
 
@@ -42,6 +61,7 @@ class RetrieveInvoiceRequest
      */
     public function response($print = false): RequestedDoc
     {
+        // TODO: fix response
         $response = $this->response;
         dd($response);
         if ($print) {

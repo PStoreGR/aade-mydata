@@ -15,14 +15,24 @@ use Pstoregr\Myaade\Controllers\SendInvoiceController;
 class SendInvoiceRequest
 {
     /**
+     * @var array $invoiceArgs
+     */
+    private array $invoiceArgs;
+
+    /**
      * @var ResponseDoc $response
      */
     private ResponseDoc $response;
 
     /**
-     * @var array $invoiceArgs
+     * @var SendInvoices $sendInvoices
      */
-    private array $invoiceArgs;
+    private SendInvoices $sendInvoices;
+
+    /**
+     * @var SendInvoiceController $sendInvoiceController
+     */
+    private SendInvoiceController $sendInvoiceController;
 
     /**
      * @param array $args
@@ -30,6 +40,7 @@ class SendInvoiceRequest
      * @var array $invoiceArgs
      * @var InvoicesDoc $invoicesDoc
      * @var SendInvoices $sendInvoices
+     * @var SendInvoiceController $sendInvoiceController
      * 
      * @return self
      */
@@ -37,10 +48,10 @@ class SendInvoiceRequest
     {
 
         $this->invoiceArgs = $args;
-        $invoicesDoc = (new SendInvoiceController)->createInvoice($this->invoiceArgs)->getInvoicesDoc();
-        $sendInvoices = new SendInvoices();
+        $invoicesDoc = $this->sendInvoiceController->createInvoice($this->invoiceArgs)->getInvoicesDoc();
+
         // TODO: Implement the handle func to add multiple invoices.
-        $this->response = $sendInvoices->handle($invoicesDoc);
+        $this->response = $this->sendInvoices->handle($invoicesDoc);
         return $this;
     }
 
@@ -54,6 +65,7 @@ class SendInvoiceRequest
      */
     public function response($print = false): ResponseDoc
     {
+        // TODO: fix response
         $response = $this->response;
         if ($print) {
             $errors = [];
