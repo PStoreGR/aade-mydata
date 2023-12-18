@@ -37,7 +37,7 @@ class SendInvoiceValidator
         $this->isArray($issuer);
 
         $this->isEmptyIssuer($issuer);
-        echo "validate issuer \n";
+
         return $this->isString($issuer['afm'])
             ->isString($issuer['country'])
             ->isInt($issuer['branch']);
@@ -55,7 +55,7 @@ class SendInvoiceValidator
         $this->isArray($customer);
 
         $this->isEmptyCustomer($customer);
-        echo "validate customer \n";
+
         return $this
             // address
             ->isString($customer['postaCode'])
