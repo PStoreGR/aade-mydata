@@ -115,6 +115,7 @@ class SendInvoiceModel
      */
     public function setIssuer($vatNumber, $country, $branch): void
     {
+        $this->issuer = new Issuer();
         $this->issuer->setVatNumber($vatNumber);
         $this->issuer->setCountry($country);
         $this->issuer->setBranch($branch);
@@ -132,6 +133,7 @@ class SendInvoiceModel
      */
     public function setAddress($postalCode, $city): void
     {
+        $this->address = new Address();
         $this->address->setPostalCode($postalCode);
         $this->address->setCity($city);
     }
@@ -150,6 +152,7 @@ class SendInvoiceModel
      */
     public function setCounterPart($vatNumber, $country, $branch): void
     {
+        $this->counterpart = new Counterpart();
         $this->counterpart->setVatNumber($vatNumber);
         $this->counterpart->setCountry($country);
         $this->counterpart->setBranch($branch);
@@ -175,6 +178,7 @@ class SendInvoiceModel
      */
     public function setInvoiceHeader($series, $aa, $issueDate, $currency, $dispatchDate, $dispatchTime, $vehicleNumber): void
     {
+        $this->invoiceHeader = new InvoiceHeader();
         $this->invoiceHeader->setSeries($series);
         $this->invoiceHeader->setAa($aa);
         $this->invoiceHeader->setIssueDate($issueDate);
@@ -199,6 +203,7 @@ class SendInvoiceModel
      */
     public function setPaymentMethodDetail($amount, $paymentMethodInfo): void
     {
+        $this->paymentMethodDetail = new PaymentMethodDetail();
         $this->paymentMethodDetail->setType($this->paymentMethod->value);
         $this->paymentMethodDetail->setAmount($amount);
         $this->paymentMethodDetail->setPaymentMethodInfo($paymentMethodInfo);
@@ -220,6 +225,7 @@ class SendInvoiceModel
      */
     public function setInvoicedetail($lineNumber, $netValue, $vatAmount, $discountOption): void
     {
+        $this->invoiceDetails = new InvoiceDetails();
         $this->invoiceDetails->setLineNumber($lineNumber);
         $this->invoiceDetails->setNetValue($netValue);
         $this->invoiceDetails->setVatCategory($this->vatCategory->value);
@@ -241,6 +247,7 @@ class SendInvoiceModel
      */
     public function setIncomeClassification($amount): void
     {
+        $this->incomeClassification = new IncomeClassification();
         $this->incomeClassification->setClassificationType($this->incomeClassificationType->value);
         $this->incomeClassification->setClassificationCategory($this->incomeClassificationCategory->value);
         $this->incomeClassification->setAmount($amount);
@@ -273,6 +280,7 @@ class SendInvoiceModel
         $totalDeductionsAmount,
         $totalGrossValue
     ): void {
+        $this->invoiceSummary = new InvoiceSummary();
         $this->invoiceSummary->setTotalNetValue($totalNetValue);
         $this->invoiceSummary->setTotalVatAmount($totalVatAmount);
         $this->invoiceSummary->setTotalWithheldAmount($totalWithheldAmount);
@@ -298,6 +306,7 @@ class SendInvoiceModel
      */
     public function setInvoice(): Invoice
     {
+        $this->invoice = new Invoice();
         $this->invoice->setIssuer($this->issuer);
         $this->invoice->setCounterpart($this->counterpart);
         $this->invoice->setInvoiceHeader($this->invoiceHeader);

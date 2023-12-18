@@ -49,6 +49,7 @@ class SendInvoiceRequest extends SendInvoiceController
         $invoicesDoc = $this->createInvoice($this->invoice)
             ->getInvoicesDoc();
         // TODO: Implement the handle func to add multiple invoices.
+        $this->sendInvoices = new SendInvoices();
         $this->response = $this->sendInvoices->handle($invoicesDoc);
         return $this;
     }

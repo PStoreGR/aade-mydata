@@ -54,6 +54,11 @@ class SendInvoiceService extends SendInvoiceValidator
         $this->validate($invoice)->customer();
 
         /**
+         * Initialize Invoice Model
+         */
+        $this->sendInvoiceModel = new SendInvoiceModel();
+
+        /**
          * Set Issuer
          */
         $this->sendInvoiceModel->setIssuer(
@@ -142,6 +147,7 @@ class SendInvoiceService extends SendInvoiceValidator
      */
     public function preparedInvoicesDoc(): InvoicesDoc | null
     {
+        $this->invoicesDoc = new InvoicesDoc();
         $this->invoicesDoc->addInvoice($this->preparedInvoice);
         return $this->invoicesDoc ?? null;
     }
