@@ -21,8 +21,6 @@ class AppConfig
      */
     public static function load($settings): void
     {
-        require __DIR__ . '/../../vendor/autoload.php';
-
         self::$settings = $settings;
 
         if ((new self)->isEmptyEnv()) {
