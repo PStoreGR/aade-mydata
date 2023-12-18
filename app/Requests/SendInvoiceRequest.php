@@ -12,12 +12,12 @@ use Pstoregr\Myaade\Controllers\SendInvoiceController;
  * 
  * Send invoice request && get the response
  */
-class SendInvoiceRequest
+class SendInvoiceRequest extends SendInvoiceController
 {
     /**
-     * @var array $invoiceArgs
+     * @var array $invoice
      */
-    private array $invoiceArgs;
+    private array $invoice;
 
     /**
      * @var ResponseDoc $response
@@ -35,21 +35,19 @@ class SendInvoiceRequest
     private SendInvoiceController $sendInvoiceController;
 
     /**
-     * @param array $args
+     * @param array $invoice
      * 
-     * @var array $invoiceArgs
+     * @var array $invoice
      * @var InvoicesDoc $invoicesDoc
      * @var SendInvoices $sendInvoices
-     * @var SendInvoiceController $sendInvoiceController
      * 
      * @return self
      */
-    public function send($args): self
+    public function send($invoice): self
     {
-
-        $this->invoiceArgs = $args;
-        $invoicesDoc = $this->sendInvoiceController->createInvoice($this->invoiceArgs)->getInvoicesDoc();
-
+        $this->invoice = $invoice;
+        $invoicesDoc = $this->createInvoice($this->invoice)
+            ->getInvoicesDoc();
         // TODO: Implement the handle func to add multiple invoices.
         $this->response = $this->sendInvoices->handle($invoicesDoc);
         return $this;

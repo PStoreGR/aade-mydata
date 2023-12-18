@@ -13,13 +13,13 @@ use Pstoregr\Myaade\Services\SendInvoiceService;
 class SendInvoiceController extends SendInvoiceService
 {
     /**
-     * @param array $args
+     * @param array $invoice
      * 
      * @return self
      */
-    public function createInvoice(array $args): self
+    public function createInvoice($invoice): self
     {
-        $this->create()->invoice($args);
+        $this->create()->invoice($invoice);
         return $this;
     }
 

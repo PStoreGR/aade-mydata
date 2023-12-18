@@ -67,6 +67,11 @@ class SendInvoiceModel
     private InvoiceSummary $invoiceSummary;
 
     /**
+     *  @var Invoice $invoice
+     */
+    private Invoice $invoice;
+
+    /**
      *  @var InvoiceType $invoiceType
      */
     private InvoiceType $invoiceType = InvoiceType::TYPE_1_4;
@@ -100,7 +105,7 @@ class SendInvoiceModel
     /**
      * Set Issuer
      * 
-     * @param string $afm
+     * @param string $vatNumber
      * @param string $country
      * @param int $branch
      * 
@@ -108,13 +113,11 @@ class SendInvoiceModel
      * 
      * @return void
      */
-    public function setIssuer($afm, $country, $branch): void
+    public function setIssuer($vatNumber, $country, $branch): void
     {
-        $issuer = new Issuer();
-        $issuer->setVatNumber($afm);
-        $issuer->setCountry($country);
-        $issuer->setBranch($branch);
-        $this->issuer = $issuer;
+        $this->issuer->setVatNumber($vatNumber);
+        $this->issuer->setCountry($country);
+        $this->issuer->setBranch($branch);
     }
 
     /**
@@ -129,16 +132,14 @@ class SendInvoiceModel
      */
     public function setAddress($postalCode, $city): void
     {
-        $address = new Address();
-        $address->setPostalCode($postalCode);
-        $address->setCity($city);
-        $this->address = $address;
+        $this->address->setPostalCode($postalCode);
+        $this->address->setCity($city);
     }
 
     /**
      * Set Counterpart
      * 
-     * @param string $afm
+     * @param string $vatNumber
      * @param string $country
      * @param int $branch
      * 
@@ -147,14 +148,12 @@ class SendInvoiceModel
      * 
      * @return void
      */
-    public function setCounterPart($afm, $country, $branch): void
+    public function setCounterPart($vatNumber, $country, $branch): void
     {
-        $counterpart = new Counterpart();
-        $counterpart->setVatNumber($afm);
-        $counterpart->setCountry($country);
-        $counterpart->setBranch($branch);
-        $counterpart->setAddress($this->address);
-        $this->counterpart = $counterpart;
+        $this->counterpart->setVatNumber($vatNumber);
+        $this->counterpart->setCountry($country);
+        $this->counterpart->setBranch($branch);
+        $this->counterpart->setAddress($this->address);
     }
 
     /**
@@ -176,17 +175,15 @@ class SendInvoiceModel
      */
     public function setInvoiceHeader($series, $aa, $issueDate, $currency, $dispatchDate, $dispatchTime, $vehicleNumber): void
     {
-        $invoiceHeader = new InvoiceHeader();
-        $invoiceHeader->setSeries($series);
-        $invoiceHeader->setAa($aa);
-        $invoiceHeader->setIssueDate($issueDate);
-        $invoiceHeader->setInvoiceType($this->invoiceType->value);
-        $invoiceHeader->setCurrency($currency);
-        $invoiceHeader->setDispatchDate($dispatchDate);
-        $invoiceHeader->setDispatchTime($dispatchTime);
-        $invoiceHeader->setVehicleNumber($vehicleNumber);
-        $invoiceHeader->setMovePurpose($this->movePurpose->value);
-        $this->invoiceHeader = $invoiceHeader;
+        $this->invoiceHeader->setSeries($series);
+        $this->invoiceHeader->setAa($aa);
+        $this->invoiceHeader->setIssueDate($issueDate);
+        $this->invoiceHeader->setInvoiceType($this->invoiceType->value);
+        $this->invoiceHeader->setCurrency($currency);
+        $this->invoiceHeader->setDispatchDate($dispatchDate);
+        $this->invoiceHeader->setDispatchTime($dispatchTime);
+        $this->invoiceHeader->setVehicleNumber($vehicleNumber);
+        $this->invoiceHeader->setMovePurpose($this->movePurpose->value);
     }
 
     /**
@@ -196,17 +193,15 @@ class SendInvoiceModel
      * @param string $paymentMethodInfo
      * 
      * @var PaymentMethodDetail $paymentMethodDetail
-     * @var PaymentMethod|string $type
+     * @var PaymentMethod|string $paymentMethod
      * 
      * @return void
      */
     public function setPaymentMethodDetail($amount, $paymentMethodInfo): void
     {
-        $paymentMethodDetail = new PaymentMethodDetail();
-        $paymentMethodDetail->setType($this->paymentMethod->value);
-        $paymentMethodDetail->setAmount($amount);
-        $paymentMethodDetail->setPaymentMethodInfo($paymentMethodInfo);
-        $this->paymentMethodDetail = $paymentMethodDetail;
+        $this->paymentMethodDetail->setType($this->paymentMethod->value);
+        $this->paymentMethodDetail->setAmount($amount);
+        $this->paymentMethodDetail->setPaymentMethodInfo($paymentMethodInfo);
     }
 
     /**
@@ -218,21 +213,19 @@ class SendInvoiceModel
      * @param bool $discountOption
      * 
      * @var InvoiceDetails $invoiceDetails
-     * @var VatCategory $vatCategory
+     * @var VatCategory|string $vatCategory
      * @var IncomeClassification $incomeClassification
      * 
      * @return void
      */
     public function setInvoicedetail($lineNumber, $netValue, $vatAmount, $discountOption): void
     {
-        $invoiceDetails = new InvoiceDetails();
-        $invoiceDetails->setLineNumber($lineNumber);
-        $invoiceDetails->setNetValue($netValue);
-        $invoiceDetails->setVatCategory($this->vatCategory->value);
-        $invoiceDetails->setVatAmount($vatAmount);
-        $invoiceDetails->setDiscountOption($discountOption);
-        $invoiceDetails->addIncomeClassification($this->incomeClassification);
-        $this->invoiceDetails = $invoiceDetails;
+        $this->invoiceDetails->setLineNumber($lineNumber);
+        $this->invoiceDetails->setNetValue($netValue);
+        $this->invoiceDetails->setVatCategory($this->vatCategory->value);
+        $this->invoiceDetails->setVatAmount($vatAmount);
+        $this->invoiceDetails->setDiscountOption($discountOption);
+        $this->invoiceDetails->addIncomeClassification($this->incomeClassification);
     }
 
     /**
@@ -241,18 +234,16 @@ class SendInvoiceModel
      * @param float $amount
      * 
      * @var IncomeClassification $incomeClassification
-     * @var IncomeClassificationType|string $classificationType
+     * @var IncomeClassificationType|string $incomeClassificationType
      * @var IncomeClassificationCategory|string $classificationCategory
      * 
      * @return void
      */
     public function setIncomeClassification($amount): void
     {
-        $incomeClassification = new IncomeClassification();
-        $incomeClassification->setClassificationType($this->incomeClassificationType->value);
-        $incomeClassification->setClassificationCategory($this->incomeClassificationCategory->value);
-        $incomeClassification->setAmount($amount);
-        $this->incomeClassification = $incomeClassification;
+        $this->incomeClassification->setClassificationType($this->incomeClassificationType->value);
+        $this->incomeClassification->setClassificationCategory($this->incomeClassificationCategory->value);
+        $this->incomeClassification->setAmount($amount);
     }
 
     /**
@@ -282,17 +273,15 @@ class SendInvoiceModel
         $totalDeductionsAmount,
         $totalGrossValue
     ): void {
-        $invoiceSummary = new InvoiceSummary();
-        $invoiceSummary->setTotalNetValue($totalNetValue);
-        $invoiceSummary->setTotalVatAmount($totalVatAmount);
-        $invoiceSummary->setTotalWithheldAmount($totalWithheldAmount);
-        $invoiceSummary->setTotalFeesAmount($totalFeesAmount);
-        $invoiceSummary->setTotalStampDutyAmount($totalStampDutyAmount);
-        $invoiceSummary->setTotalOtherTaxesAmount($totalOtherTaxesAmount);
-        $invoiceSummary->setTotalDeductionsAmount($totalDeductionsAmount);
-        $invoiceSummary->setTotalGrossValue($totalGrossValue);
-        $invoiceSummary->addIncomeClassification($this->incomeClassification);
-        $this->invoiceSummary = $invoiceSummary;
+        $this->invoiceSummary->setTotalNetValue($totalNetValue);
+        $this->invoiceSummary->setTotalVatAmount($totalVatAmount);
+        $this->invoiceSummary->setTotalWithheldAmount($totalWithheldAmount);
+        $this->invoiceSummary->setTotalFeesAmount($totalFeesAmount);
+        $this->invoiceSummary->setTotalStampDutyAmount($totalStampDutyAmount);
+        $this->invoiceSummary->setTotalOtherTaxesAmount($totalOtherTaxesAmount);
+        $this->invoiceSummary->setTotalDeductionsAmount($totalDeductionsAmount);
+        $this->invoiceSummary->setTotalGrossValue($totalGrossValue);
+        $this->invoiceSummary->addIncomeClassification($this->incomeClassification);
     }
 
     /**
@@ -309,13 +298,12 @@ class SendInvoiceModel
      */
     public function setInvoice(): Invoice
     {
-        $invoice = new Invoice();
-        $invoice->setIssuer($this->issuer);
-        $invoice->setCounterpart($this->counterpart);
-        $invoice->setInvoiceHeader($this->invoiceHeader);
-        $invoice->addPaymentMethod($this->paymentMethodDetail);
-        $invoice->addInvoiceDetails($this->invoiceDetails);
-        $invoice->setInvoiceSummary($this->invoiceSummary);
-        return $invoice;
+        $this->invoice->setIssuer($this->issuer);
+        $this->invoice->setCounterpart($this->counterpart);
+        $this->invoice->setInvoiceHeader($this->invoiceHeader);
+        $this->invoice->addPaymentMethod($this->paymentMethodDetail);
+        $this->invoice->addInvoiceDetails($this->invoiceDetails);
+        $this->invoice->setInvoiceSummary($this->invoiceSummary);
+        return $this->invoice;
     }
 }

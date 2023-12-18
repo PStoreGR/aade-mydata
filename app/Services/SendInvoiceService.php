@@ -5,13 +5,14 @@ namespace Pstoregr\Myaade\Services;
 use Firebed\AadeMyData\Models\Invoice;
 use Firebed\AadeMyData\Models\InvoicesDoc;
 use Pstoregr\Myaade\Models\SendInvoiceModel;
+use Pstoregr\Myaade\Validators\SendInvoiceValidator;
 
 /**
  * SendInvoiceService class
  * 
  * Create && prepare the invoice
  */
-class SendInvoiceService
+class SendInvoiceService extends SendInvoiceValidator
 {
     /**
      * @var SendInvoiceModel $sendInvoiceModel
@@ -37,93 +38,97 @@ class SendInvoiceService
     }
 
     /**
-     * @param array $args
+     * @param array $invoice
      * 
      * @var SendInvoiceModel $sendInvoiceModel
      * @var Invoice $preparedInvoice
      * 
      * @return void
      */
-    public function invoice($args): void
+    public function invoice($invoice): void
     {
-        $this->sendInvoiceModel = new SendInvoiceModel();
+        /**
+         * Validate The Invoice
+         */
+        $this->validate($invoice)->issuer();
+        $this->validate($invoice)->customer();
 
         /**
          * Set Issuer
          */
         $this->sendInvoiceModel->setIssuer(
-            $args['issuer']['afm'],
-            $args['issuer']['country'],
-            $args['issuer']['branch']
+            $invoice['issuer']['afm'],
+            $invoice['issuer']['country'],
+            $invoice['issuer']['branch']
         );
 
         /**
          * Set Adress
          */
         $this->sendInvoiceModel->setAddress(
-            $args['customer']['postaCode'],
-            $args['customer']['city']
+            $invoice['customer']['postaCode'],
+            $invoice['customer']['city']
         );
 
         /**
          * Set CounterPart
          */
         $this->sendInvoiceModel->setCounterPart(
-            $args['customer']['afm'],
-            $args['customer']['country'],
-            $args['customer']['branch']
+            $invoice['customer']['afm'],
+            $invoice['customer']['country'],
+            $invoice['customer']['branch']
         );
 
         /**
          * Set Invoice Header
          */
         $this->sendInvoiceModel->setInvoiceHeader(
-            $args['customer']['series'],
-            $args['customer']['aa'],
-            $args['customer']['issueDate'],
-            $args['customer']['currency'],
-            $args['customer']['dispatchDate'],
-            $args['customer']['dispatchTime'],
-            $args['customer']['vehicleNumber']
+            $invoice['customer']['series'],
+            $invoice['customer']['aa'],
+            $invoice['customer']['issueDate'],
+            $invoice['customer']['currency'],
+            $invoice['customer']['dispatchDate'],
+            $invoice['customer']['dispatchTime'],
+            $invoice['customer']['vehicleNumber']
         );
 
         /**
          * Set Payment Info Details
          */
         $this->sendInvoiceModel->setPaymentMethodDetail(
-            $args['customer']['paymentMethodAmount'],
-            $args['customer']['paymentMethodInfo']
+            $invoice['customer']['paymentMethodAmount'],
+            $invoice['customer']['paymentMethodInfo']
         );
 
         /**
          * Set Income Classification
          */
         $this->sendInvoiceModel->setIncomeClassification(
-            $args['customer']['incomeClassificationAmount']
+            $invoice['customer']['incomeClassificationAmount']
         );
 
         /**
          * Set Invoice Details 
          */
         $this->sendInvoiceModel->setInvoicedetail(
-            $args['customer']['lineNumber'],
-            $args['customer']['netValue'],
-            $args['customer']['vatAmount'],
-            $args['customer']['discountOption']
+            $invoice['customer']['lineNumber'],
+            $invoice['customer']['netValue'],
+            $invoice['customer']['vatAmount'],
+            $invoice['customer']['discountOption']
         );
 
         /**
          * Set Summary
          */
         $this->sendInvoiceModel->setInvoiceSummary(
-            $args['customer']['totalNetValue'],
-            $args['customer']['totalVatAmount'],
-            $args['customer']['totalWithHeldAmount'],
-            $args['customer']['totalFeesAmount'],
-            $args['customer']['totalStampDutyAmount'],
-            $args['customer']['totalOtherTaxesAmount'],
-            $args['customer']['totalDeductionsAmount'],
-            $args['customer']['totalGrossValue']
+            $invoice['customer']['totalNetValue'],
+            $invoice['customer']['totalVatAmount'],
+            $invoice['customer']['totalWithHeldAmount'],
+            $invoice['customer']['totalFeesAmount'],
+            $invoice['customer']['totalStampDutyAmount'],
+            $invoice['customer']['totalOtherTaxesAmount'],
+            $invoice['customer']['totalDeductionsAmount'],
+            $invoice['customer']['totalGrossValue']
         );
 
         $this->preparedInvoice = $this->sendInvoiceModel->setInvoice();
@@ -137,7 +142,6 @@ class SendInvoiceService
      */
     public function preparedInvoicesDoc(): InvoicesDoc | null
     {
-        $this->invoicesDoc = new InvoicesDoc();
         $this->invoicesDoc->addInvoice($this->preparedInvoice);
         return $this->invoicesDoc ?? null;
     }
