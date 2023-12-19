@@ -24,9 +24,11 @@ class AppConfig
         self::$settings = $settings;
 
         if ((new self)->isEmptyEnv()) {
-            dd("Specify the environment settings [dev|prod].");
+            var_dump("Specify the environment settings [dev|prod].");
+            die;
         } elseif ((new self)->isEmptyCredentials()) {
-            dd("Specify the user credentials.");
+            var_dump("Specify the user credentials.");
+            die;
         } else {
             \Firebed\AadeMyData\Http\MyDataRequest::setEnvironment($settings['environment']);
             \Firebed\AadeMyData\Http\MyDataRequest::setCredentials($settings['credentials']['user_id'], $settings['credentials']['subscription_key']);

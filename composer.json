@@ -15,8 +15,7 @@
     }
   ],
   "require": {
-    "firebed/aade-mydata": "^3.1.4",
-    "symfony/var-dumper": "^7.0"
+    "firebed/aade-mydata": "^3.1.4"
   },
   "autoload": {
     "psr-4": {

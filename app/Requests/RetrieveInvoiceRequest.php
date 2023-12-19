@@ -63,7 +63,8 @@ class RetrieveInvoiceRequest
     {
         // TODO: fix response
         $response = $this->response;
-        dd($response);
+        var_dump($response);
+        die;
         if ($print) {
             $errors = [];
             foreach ($response as $responseType) {
