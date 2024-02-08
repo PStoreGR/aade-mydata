@@ -16,7 +16,7 @@ class CancelInvoiceController extends CancelInvoiceService
      * 
      * @return string
      */
-    public function cancelInvoice($mark): string
+    public function cancelInvoice(string $mark): string
     {
         return $this->cancel()->invoice($mark);
     }

@@ -45,7 +45,7 @@ class SendInvoiceService extends SendInvoiceValidator
      * 
      * @return void
      */
-    public function invoice($invoice): void
+    public function invoice(array $invoice): void
     {
         /**
          * Validate The Invoice
@@ -148,6 +148,8 @@ class SendInvoiceService extends SendInvoiceValidator
     public function preparedInvoicesDoc(): InvoicesDoc | null
     {
         $this->invoicesDoc = new InvoicesDoc();
+
+        // INFO: In addInvoice you can pass multiple invoices.
         $this->invoicesDoc->addInvoice($this->preparedInvoice);
         return $this->invoicesDoc ?? null;
     }

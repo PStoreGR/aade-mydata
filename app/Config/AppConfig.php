@@ -19,7 +19,7 @@ class AppConfig
      * 
      * @return void
      */
-    public static function load($settings): void
+    public static function load(array $settings): void
     {
         self::$settings = $settings;
 

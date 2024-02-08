@@ -30,11 +30,6 @@ class SendInvoiceRequest extends SendInvoiceController
     private SendInvoices $sendInvoices;
 
     /**
-     * @var SendInvoiceController $sendInvoiceController
-     */
-    private SendInvoiceController $sendInvoiceController;
-
-    /**
      * @param array $invoice
      * 
      * @var array $invoice
@@ -43,12 +38,12 @@ class SendInvoiceRequest extends SendInvoiceController
      * 
      * @return self
      */
-    public function send($invoice): self
+    public function send(array $invoice): self
     {
         $this->invoice = $invoice;
-        $invoicesDoc = $this->createInvoice($this->invoice)
+        $invoicesDoc = $this
+            ->createInvoice($this->invoice)
             ->getInvoicesDoc();
-        // TODO: Implement the handle func to add multiple invoices.
         $this->sendInvoices = new SendInvoices();
         $this->response = $this->sendInvoices->handle($invoicesDoc);
         return $this;
@@ -62,7 +57,7 @@ class SendInvoiceRequest extends SendInvoiceController
      * 
      * @return ResponseDoc | void
      */
-    public function response($print = false): ResponseDoc
+    public function response(bool $print = false): ResponseDoc
     {
         // TODO: fix response
         $response = $this->response;

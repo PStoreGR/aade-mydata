@@ -24,30 +24,42 @@ class RetrieveInvoiceRequest
      * Sends the cancelation request
      * 
      * @param string $mark
+     * @param string $dateFrom
+     * @param string $dateTo
+     * @param string $receiverVatNumber
+     * @param string $entityVatNumber
+     * @param string $invType
+     * @param string $maxMark
+     * @param string $nextPartitionKey
+     * @param string $nextRowKey
      * 
      * @var RequestDocs $requestDocs
      * @var RequestedDoc $response
      *
      * @return self
      */
-    public function send($mark): self
-    {
-        /**
-         * TODO: fix handle params
-         * 
-         * public function handle(
-         * string $mark = '',
-         * ?string $dateFrom = null,
-         * ?string $dateTo = null,
-         * ?string $receiverVatNumber = null,
-         * ?string $entityVatNumber = null,
-         * ?string $invType = null,
-         * ?string $maxMark = null,
-         * ?string $nextPartitionKey = null,
-         * ?string $nextRowKey = null
-         * ): RequestedDoc { }
-         */
-        $this->response = $this->requestDocs->handle($mark);
+    public function send(
+        string $mark,
+        ?string $dateFrom = null,
+        ?string $dateTo = null,
+        ?string $receiverVatNumber = null,
+        ?string $entityVatNumber = null,
+        ?string $invType = null,
+        ?string $maxMark = null,
+        ?string $nextPartitionKey = null,
+        ?string $nextRowKey = null
+    ): self {
+        $this->response = $this->requestDocs->handle(
+            $mark,
+            $dateFrom,
+            $dateTo,
+            $receiverVatNumber,
+            $entityVatNumber,
+            $invType,
+            $maxMark,
+            $nextPartitionKey,
+            $nextRowKey
+        );
         return $this;
     }
 
@@ -59,7 +71,7 @@ class RetrieveInvoiceRequest
      * 
      * @return RequestedDoc | void
      */
-    public function response($print = false): RequestedDoc
+    public function response(bool $print = false): RequestedDoc
     {
         // TODO: fix response
         $response = $this->response;

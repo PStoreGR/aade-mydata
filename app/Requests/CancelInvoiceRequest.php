@@ -24,22 +24,17 @@ class CancelInvoiceRequest
 
     /** 
      * @param string $mark
+     * @param string | null $entityVatNumber
      * 
      * @var CancelInvoice $cancelInvoice
      * @var ResponseDoc $response
      *
      * @return self
      */
-    public function send($mark): self
+    public function send(string $mark, ?string $entityVatNumber = null): self
     {
-        /**
-         * TODO: fix handle params
-         * 
-         * public function handle(
-         *       string $mark, ?string $entityVatNumber = null
-         * ): ResponseDoc { }         * 
-         */
-        $this->response = $this->cancelInvoice->handle($mark);
+        $this->cancelInvoice = (new CancelInvoice);
+        $this->response = $this->cancelInvoice->handle($mark, $entityVatNumber);
         return $this;
     }
 
@@ -51,7 +46,7 @@ class CancelInvoiceRequest
      * 
      * @return ResponseDoc | void
      */
-    public function response($print = false): ResponseDoc
+    public function response(bool $print = false): ResponseDoc
     {
         // TODO: fix response
 

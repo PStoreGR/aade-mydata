@@ -17,7 +17,7 @@ class SendInvoiceController extends SendInvoiceService
      * 
      * @return self
      */
-    public function createInvoice($invoice): self
+    public function createInvoice(array $invoice): self
     {
         $this->create()->invoice($invoice);
         return $this;

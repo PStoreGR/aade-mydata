@@ -131,7 +131,7 @@ class SendInvoiceModel
      * 
      * @return void
      */
-    public function setAddress($postalCode, $city): void
+    public function setAddress(string $postalCode, string $city): void
     {
         $this->address = new Address();
         $this->address->setPostalCode($postalCode);
@@ -150,7 +150,7 @@ class SendInvoiceModel
      * 
      * @return void
      */
-    public function setCounterPart($vatNumber, $country, $branch): void
+    public function setCounterPart(string $vatNumber, string $country, int $branch): void
     {
         $this->counterpart = new Counterpart();
         $this->counterpart->setVatNumber($vatNumber);

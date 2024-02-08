@@ -16,7 +16,7 @@ class RetrieveInvoiceController extends RetrieveInvoiceService
      * 
      * @return string
      */
-    public function retrieveInvoice($mark): string
+    public function retrieveInvoice(string $mark): string
     {
         return $this->retrieve()->invoice($mark);
     }
